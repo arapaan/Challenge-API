@@ -15,8 +15,8 @@ class LogoutController extends Controller
         $request->user()->tokens()->delete();
 
         return response()->json([
-            'status'    => true,
-            'message'   => 'Anjay Berhasil wak',
-        ]);
+            'status'    => 'Success',
+            'message'   => 'Log-out Berhasil Dilakukan',
+        ], );
     }
 }

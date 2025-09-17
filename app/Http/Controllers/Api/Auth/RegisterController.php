@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -24,10 +26,15 @@ class RegisterController extends Controller
         $user = User::create([
             'name'      => $request->name,
             'email'     => $request->email,
-            'password'  => $request->password
+            'password'  => Hash::make($request->password)
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $tokenResult = $user->createToken('auth_token');
+        $token = $tokenResult->plainTextToken;
+
+        $tokenModel = $tokenResult->accessToken;
+        $tokenModel->expires_at = Carbon::now()->addHour();
+        $tokenModel->save();
 
         return response()->json([
             'status'    => true,
