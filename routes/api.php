@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
@@ -11,3 +12,4 @@ Route::post('/register', RegisterController::class);
 Route::post('/login', LoginController::class);
 Route::middleware('auth:sanctum')->post('/logout', LogoutController::class);
 Route::post('/genre', GenreController::class);
+Route::post('/anime', AnimeController::class);
